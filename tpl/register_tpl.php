@@ -21,6 +21,10 @@
                         7Learn Auth <br />
                         <span style="color: hsl(218, 81%, 75%)">Register Page</span>
                     </h1>
+                    <?php if(!empty($_SESSION['error'])):?>
+                    <h3 class="mb-f opacity-70 text-danger"><?= $_SESSION['error'] ?></h3>
+                    <?php unset($_SESSION['error']) ?>
+                    <?php endif; ?>
                 </div>
 
                 <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
@@ -44,7 +48,7 @@
 
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
-                                    <input type="email" name="email" id="email" class="form-control" />
+                                    <input type="text" name="email" id="email" class="form-control" />
                                     <label class="form-label" for="email">Email address</label>
                                 </div>
 
