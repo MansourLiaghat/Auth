@@ -22,25 +22,41 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
         
         # Create User
-        $createUser = createUser($_POST);
-        if(!$createUser){
+        $userCreate = userCreate($_POST);
+        if(!$userCreate){
             setErrorrAndredirect('User Not Created' , 'auth.php?action=register' );
         }else{
+            $_SESSION['email'] = $_POST['email'];
             redirect('auth.php?action=verify');
         }
     }
 }
 
 
-
 ## Include Main Page
+# Action Register
 if(isset($_GET['action']) && $_GET['action'] == 'register'){
     require BASE_PATH . 'tpl/register_tpl.php';
 }
+# Action Login
 if(isset($_GET['action']) && $_GET['action'] == 'login'){
     require BASE_PATH . 'tpl/login_tpl.php';
 }
-if(isset($_GET['action']) && $_GET['action'] == 'verify'){
+# Action Verify
+if(isset($_GET['action']) && $_GET['action'] == 'verify' && !empty($_SESSION['email'])){
+    if(!isUserExist(null , $_SESSION['email'])){
+        setErrorrAndredirect('User Not Found' , 'auth.php?action=register' );
+    }
+
+    if(isset($_SESSION['hash']) && isAliveToken($_SESSION['hash'])){
+      print_r(findTokenByHash($_SESSION['hash']));
+    }else{
+        $createTokenLogin=createTokenLogin();
+        $_SESSION['hash'] = $createTokenLogin['hash'];
+    }
+
+  
     require BASE_PATH . 'tpl/verify_tpl.php';
+
 }
 

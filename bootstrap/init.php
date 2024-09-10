@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+date_default_timezone_set('Asia/Tehran');
 require_once 'constants.php';
 require_once 'config.php';
 require_once BASE_PATH . 'libs/helpers_func.php';
