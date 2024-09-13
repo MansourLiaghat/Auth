@@ -3,7 +3,7 @@
         'name' => 'mansourliaghat/auth',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '44ae1a9f415c184c7f93a3eeccab6b664ce21aac',
+        'reference' => '4c3dd0149faa17a453976b2d11df936fbda05ebe',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'mansourliaghat/auth' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '44ae1a9f415c184c7f93a3eeccab6b664ce21aac',
+            'reference' => '4c3dd0149faa17a453976b2d11df936fbda05ebe',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

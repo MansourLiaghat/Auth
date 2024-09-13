@@ -49,13 +49,13 @@ if(isset($_GET['action']) && $_GET['action'] == 'verify' && !empty($_SESSION['em
     }
 
     if(isset($_SESSION['hash']) && isAliveToken($_SESSION['hash'])){
-      print_r(findTokenByHash($_SESSION['hash']));
+        sendTokenByEmail($_SESSION['email'],findTokenByHash($_SESSION['hash'])->token);
     }else{
         $createTokenLogin=createTokenLogin();
+        sendTokenByEmail($_SESSION['email'],$createTokenLogin['token']);
         $_SESSION['hash'] = $createTokenLogin['hash'];
     }
 
-  
     require BASE_PATH . 'tpl/verify_tpl.php';
 
 }

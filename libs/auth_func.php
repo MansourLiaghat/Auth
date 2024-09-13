@@ -49,3 +49,11 @@ function isAliveToken(string $hash) : bool {
         return strtotime($record->expired_at) > time()+120 ;
     }
 }
+
+function sendTokenByEmail(string $email , string|int $token) : bool {
+    global $mail ; 
+    $mail->addAddress($email);          
+    $mail->Subject = 'verify token';
+    $mail->Body    = 'your token is : ' . $token;
+    return $mail->send();
+}
