@@ -30,6 +30,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             redirect('auth.php?action=verify');
         }
     }
+
+    if(isset($_GET['action']) && $_GET['action'] == 'verify'){
+        $token = findTokenByHash($_SESSION['hash'])->token;
+        if($_POST['token'] === $token){
+            print_r($_POST);
+        }else{
+            setErrorrAndredirect('The Enterd Token Is Wrong' , 'auth.php?action=verify' );
+
+        }
+    }
+    
 }
 
 
@@ -47,7 +58,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'verify' && !empty($_SESSION['em
     if(!isUserExist(null , $_SESSION['email'])){
         setErrorrAndredirect('User Not Found' , 'auth.php?action=register' );
     }
-
+## check expired_at token
     if(isset($_SESSION['hash']) && isAliveToken($_SESSION['hash'])){
         sendTokenByEmail($_SESSION['email'],findTokenByHash($_SESSION['hash'])->token);
     }else{

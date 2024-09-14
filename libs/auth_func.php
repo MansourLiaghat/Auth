@@ -25,7 +25,7 @@ function createTokenLogin(): array  {
     $expired_at = time()+ 600;
     $sql = "INSERT INTO `tokens` (`token`,`hash`,`expired_at`) VALUES (:token,:hash,:expired_at);";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([':token'=>$token , ':hash'=>$hash , ':expired_at'=>date('y/m/d m:i:s' , $expired_at)]);
+    $stmt->execute([':token'=>$token , ':hash'=>$hash , ':expired_at'=>date('Y-m-d H:i:s' , $expired_at)]);
     return[
         'hash'=>$hash,
         'token'=>$token
