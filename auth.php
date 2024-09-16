@@ -2,6 +2,10 @@
 
 require_once './bootstrap/init.php';
 
+if(isLoginUser()){
+    redirect();
+    }
+
 
 ## Request Method Post
 if($_SERVER['REQUEST_METHOD'] == 'POST'){

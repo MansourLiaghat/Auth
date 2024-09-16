@@ -73,3 +73,17 @@ function deleteTokenByHash(string $hash) : bool {
     $stmt->execute([':hash'=>$hash]);
     return $stmt->rowCount() ? true : false ;
 }
+
+function getAuthenticateUserBySession(string $session) : bool|object {
+    global $pdo;
+    $sql = "SELECT * FROM `users` WHERE `session` = :session;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':session'=>$session]);
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+function isLoginUser() : bool {
+    if(empty($_COOKIE['auth']))
+        return false;
+        return getAuthenticateUserBySession($_COOKIE['auth']) ? true : false ;
+}
