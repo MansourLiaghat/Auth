@@ -57,3 +57,19 @@ function sendTokenByEmail(string $email , string|int $token) : bool {
     $mail->Body    = 'your token is : ' . $token;
     return $mail->send();
 }
+
+function changeLoginSession(string $session , string $email) : bool {
+    global $pdo ;
+    $sql = "UPDATE `users` SET `session` = :session WHERE `email` = :email ;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':session'=> $session , ':email' => $email]);
+    return $stmt->rowCount() ? true : false ;
+}
+
+function deleteTokenByHash(string $hash) : bool {
+    global $pdo ;
+    $sql = "DELETE FROM `tokens` WHERE `hash` = :hash;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':hash'=>$hash]);
+    return $stmt->rowCount() ? true : false ;
+}

@@ -33,14 +33,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     if(isset($_GET['action']) && $_GET['action'] == 'verify'){
         $token = findTokenByHash($_SESSION['hash'])->token;
-        if($_POST['token'] === $token){
-            print_r($_POST);
-        }else{
-            setErrorrAndredirect('The Enterd Token Is Wrong' , 'auth.php?action=verify' );
-
+        if($token === $_POST['token']){
+            $session = bin2hex(random_bytes(32));
+            changeLoginSession($session,$_SESSION['email']);
+            setcookie('auth' , $session , time()+259200 , '/');
+            deleteTokenByHash($_SESSION['hash']);
+            unset($_SESSION['hash'],$_SESSION['email']);
+            redirect();
         }
+    }else{
+        setErrorrAndredirect('The Token Is Wrong' , 'auth.php?action=verify' );
     }
-    
+
+
 }
 
 
