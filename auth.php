@@ -35,6 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     }
 
+    # Action verify
     if(isset($_GET['action']) && $_GET['action'] == 'verify'){
         $token = findTokenByHash($_SESSION['hash'])->token;
         if($token === $_POST['token']){
@@ -44,10 +45,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             deleteTokenByHash($_SESSION['hash']);
             unset($_SESSION['hash'],$_SESSION['email']);
             redirect();
+        }else{
+            setErrorrAndredirect('The Token Is Wrong' , 'auth.php?action=verify' );
         }
-    }else{
-        setErrorrAndredirect('The Token Is Wrong' , 'auth.php?action=verify' );
     }
+
+    # Action login
+    if(isset($_GET['action']) && $_GET['action'] == 'login'){
+    
+        if(empty($_POST['email'])){
+            setErrorrAndredirect('Field Email IsRequired' , 'auth.php?action=login' );
+        }
+        if(!isUserExist(null,$_POST['email'])){
+            setErrorrAndredirect('User Is Not Exists With This Email : ' . $_POST['email'] , 'auth.php?action=login' );
+        }    
+        redirect();
+    }
+
+
 
 
 }
