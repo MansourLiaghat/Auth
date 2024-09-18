@@ -58,7 +58,7 @@ function sendTokenByEmail(string $email , string|int $token) : bool {
     return $mail->send();
 }
 
-function changeLoginSession(string $session , string $email) : bool {
+function changeLoginSession(string $email , string $session = null) : bool {
     global $pdo ;
     $sql = "UPDATE `users` SET `session` = :session WHERE `email` = :email ;";
     $stmt = $pdo->prepare($sql);
@@ -86,4 +86,10 @@ function isLoginUser() : bool {
     if(empty($_COOKIE['auth']))
         return false;
         return getAuthenticateUserBySession($_COOKIE['auth']) ? true : false ;
+}
+
+function logout(string $email) : void {
+    changeLoginSession($email);
+    setcookie('auth' , '' , time() - 60 , '/');
+    redirect();
 }

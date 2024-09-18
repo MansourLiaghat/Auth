@@ -2,33 +2,16 @@
 
 require_once 'bootstrap/init.php';
 
+# User Is Login ?
 if(!isLoginUser()){
-redirect('auth.php?action=register');
+    redirect('auth.php?action=verify');
 }
-?>
 
+$userData = getAuthenticateUserBySession($_COOKIE['auth']);
 
+# Logout
+if(isset($_GET['action']) && $_GET['action'] == 'logout'){
+    logout($userData->email);
+}
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
-
-<?php foreach(getAuthenticateUserBySession($_COOKIE['auth']) as $key=>$value): ?>
-<ul>
-    <li>
-        <?= $key .' ' . $value ?>
-    </li>
-</ul>
-<?php endforeach; ?>
-
-
-</body>
-</html>
+include 'tpl/index_tpl.php';

@@ -33,7 +33,7 @@
 
                     <div class="card bg-glass">
                         <div class="card-body px-4 py-5 px-md-5">
-                            <form action="<?= siteUrl('auth.php?action=register')?>" method="post">
+                            <form action="<?= siteUrl('auth.php?action=register')?>" method="POST">
                                 <!-- Name input -->
                                 <div class="form-outline mb-4">
                                     <input type="text" name="name" id="name" class="form-control" />

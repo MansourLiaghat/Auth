@@ -5,6 +5,7 @@ require_once './bootstrap/init.php';
 if(isLoginUser()){
     redirect();
     }
+ 
 
 
 ## Request Method Post
@@ -40,7 +41,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $token = findTokenByHash($_SESSION['hash'])->token;
         if($token === $_POST['token']){
             $session = bin2hex(random_bytes(32));
-            changeLoginSession($session,$_SESSION['email']);
+            changeLoginSession($_SESSION['email'],$session);
             setcookie('auth' , $session , time()+259200 , '/');
             deleteTokenByHash($_SESSION['hash']);
             unset($_SESSION['hash'],$_SESSION['email']);
@@ -59,7 +60,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(!isUserExist(null,$_POST['email'])){
             setErrorrAndredirect('User Is Not Exists With This Email : ' . $_POST['email'] , 'auth.php?action=login' );
         }    
-        redirect();
+        
+        redirect('auth.php?action=verify');
     }
 
 
